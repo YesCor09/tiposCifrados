@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build",  // Comando de construcción
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -48,3 +48,4 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   }
 }
+

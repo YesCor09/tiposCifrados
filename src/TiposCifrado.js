@@ -8,6 +8,7 @@ const TiposCifrado = () => {
 
     return (
         <div className="tipos-cifrado-container" style={styles.container}>
+             <h1 style={styles.title}>Luis Ricardo Ibarra Coronel 7A</h1>
             <h1 style={styles.title}>Elige un tipo de Cifrado</h1>
             <div
                 style={styles.cifradoItem}

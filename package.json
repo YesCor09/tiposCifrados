@@ -31,9 +31,6 @@
       "react-app/jest"
     ]
   },
-  "scripts": {
-    "start": "npm start"
-  },
   "browserslist": {
     "production": [
       ">0.2%",

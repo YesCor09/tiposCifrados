@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import cesar from './assets/cesar.png'
 import escitala from './assets/escitala.png'
 

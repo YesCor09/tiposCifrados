@@ -15,5 +15,7 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "source": "/feedback/((?!general).*)",
+  "destination": "/api/feedback/general"
 }

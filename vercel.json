@@ -9,11 +9,11 @@
       }
     }
   ],
+  "installCommand": "npm ci --prefer-offline --no-cache",
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "installCommand": "npm ci --prefer-offline --no-cache"
+  ]
 }

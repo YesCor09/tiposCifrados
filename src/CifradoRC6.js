@@ -173,7 +173,7 @@ const CifradoRC6 = () => {
                 <div style={{ marginBottom: "20px" }}>
                     <input
                         type="password"
-                        placeholder="16 digitos"
+                        placeholder="Contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         style={{ padding: "10px", width: "300px", fontSize: "16px" }}

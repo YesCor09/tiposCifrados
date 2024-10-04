@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import toast from "react-hot-toast"; 
 
 const CifradoDjango = () => {
-    const [clave, setClave] = useState('')
+    const [clave, setClave] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
@@ -25,7 +25,16 @@ const CifradoDjango = () => {
     const [targetDebDecrypt, setDecryptTargerDeb] = useState('');
     const [passwordDecrypt, setDecryptPassword] = useState('');
 
-    const [claveDescifrado, setClaveDescifrado] = useState('')
+    const [claveDescifrado, setClaveDescifrado] = useState('');
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // Detectar cambio de tamaño de la ventana
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const validateForm = () => {
         if (!clave || !name || !email || !telephone || !address || !targetDeb || !password) {
@@ -34,15 +43,14 @@ const CifradoDjango = () => {
         }
         return true;
     };
-    
 
-    const sendDataEncrypt = async () =>{
+    const sendDataEncrypt = async () => {
         if (!validateForm()) return;
         try {
             const rs = await fetch("https://undetesteo.pythonanywhere.com/api/cifrar/", {
                 method: 'POST',
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     key: clave,
@@ -53,25 +61,25 @@ const CifradoDjango = () => {
                     credit_card: targetDeb,
                     password: password
                 })
-            })
-            const result = await rs.json()
-            setEncryptName(result.encrypted_name)
-            setEncryptEmail(result.encrypted_email)
-            setEncryptTelephone(result.encrypted_phone)
-            setEncryptAddress(result.encrypted_address)
-            setEncryptTargerDeb(result.encrypted_credit_card)
-            setEncryptPassword(result.encrypted_password)
+            });
+            const result = await rs.json();
+            setEncryptName(result.encrypted_name);
+            setEncryptEmail(result.encrypted_email);
+            setEncryptTelephone(result.encrypted_phone);
+            setEncryptAddress(result.encrypted_address);
+            setEncryptTargerDeb(result.encrypted_credit_card);
+            setEncryptPassword(result.encrypted_password);
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
-    const sendDataDeCrypt = async () =>{
+    const sendDataDeCrypt = async () => {
         try {
             const rs = await fetch("https://undetesteo.pythonanywhere.com/api/descifrar/", {
                 method: 'POST',
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     key_decrypt: claveDescifrado,
@@ -82,23 +90,121 @@ const CifradoDjango = () => {
                     encrypted_address: addressEncrypt,
                     encrypted_credit_card: targetDebEncrypt,
                 })
-            })
-
-            const result = await rs.json()
-            setDecryptName(result.decrypted_name)
-            setDecryptEmail(result.decrypted_email)
-            setDecryptTelephone(result.decrypted_phone)
-            setDecryptAddress(result.decrypted_address)
-            setDecryptTargerDeb(result.decrypted_credit_card)
-            setDecryptPassword(result.decrypted_password)
+            });
+            const result = await rs.json();
+            setDecryptName(result.decrypted_name);
+            setDecryptEmail(result.decrypted_email);
+            setDecryptTelephone(result.decrypted_phone);
+            setDecryptAddress(result.decrypted_address);
+            setDecryptTargerDeb(result.decrypted_credit_card);
+            setDecryptPassword(result.decrypted_password);
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
+    const getResponsiveStyles = () => {
+        if (windowWidth <= 480) {
+            // Para dispositivos móviles
+            return {
+                divData: {
+                    width: '90%',
+                    padding: '10px',
+                    margin: '10px 0',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '80%',
+                    padding: '10px',
+                    fontSize: '16px',
+                },
+                button: {
+                    width: '80%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        } else if (windowWidth <= 768) {
+            // Para tablets
+            return {
+                divData: {
+                    width: '80%',
+                    padding: '10px',
+                    margin: '20px',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '80%',
+                    padding: '10px',
+                    fontSize: '16px'
+                },
+                button: {
+                    width: '80%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        } else {
+            // Para pantallas más grandes
+            return {
+                divData: {
+                    width: '30%',
+                    padding: '10px',
+                    margin: '20px',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '100%',
+                    padding: '10px',
+                    fontSize: '16px'
+                },
+                button: {
+                    width: '100%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        }
+    };
+
+    const styles = getResponsiveStyles();
 
     return (
-        <div style={{ padding: "20px", textAlign: "center", display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+        <div style={styles.container}>
             <div className="divCifrado" style={styles.divData}>
                 <h1>Cifrado de datos en DJANGO</h1>
 
@@ -190,7 +296,6 @@ const CifradoDjango = () => {
                     </Button>
                 </div>
             </div>
-            
 
             <div className="divDataCifrado" style={styles.divData}>
                 <h1>Datos Cifrados</h1>
@@ -222,20 +327,22 @@ const CifradoDjango = () => {
                         placeholder="Clave"
                         value={claveDescifrado}
                         onChange={(e) => setClaveDescifrado(e.target.value)}
-                        style={{ padding: "10px", width: "300px", fontSize: "16px" }}
+                        style={styles.input}
                     />
                 </div>
+
                 <div style={{ marginBottom: "20px" }}>
                     <Button
                         onClick={() => sendDataDeCrypt()}
                         variant="contained"
                         color="secondary"
-                        style={{ marginRight: "10px" }}
+                        style={styles.button}
                     >
                         Descifrar Datos
                     </Button>
                 </div>
-                <div className="divResultDecifrado">
+
+                <div className="divResultDescifrado">
                     <h1>Datos Descifrados</h1>
                     <div style={{ marginBottom: "20px" }}>
                         <text>Nombre: {nameDecrypt}</text>
@@ -257,40 +364,8 @@ const CifradoDjango = () => {
                     </div>
                 </div>
             </div>
-            {/* <div>
-                {outputMessage && (
-                    <textarea
-                        readOnly
-                        value={outputMessage}
-                        style={{
-                            width: "300px",
-                            height: "200px",
-                            padding: "10px",
-                            fontSize: "16px",
-                            resize: "none",
-                            border: "1px solid #ccc",
-                            borderRadius: "4px",
-                            marginBottom: "10px",
-                        }}
-                    />
-                )}
-            </div> */}
         </div>
     );
 };
 
 export { CifradoDjango };
-
-const styles = {
-    divData: {
-        alignItems: 'center',
-        margin: '20px', 
-        borderWidth: '2px', 
-        borderColor: '#f1f1f1', 
-        borderStyle: 'solid',
-        padding: '10px',
-        width: '30%',
-        wordWrap: 'break-word',
-        overflowWrap: 'break-word',
-    },
-}

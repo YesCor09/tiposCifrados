@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import toast from "react-hot-toast";
 
@@ -28,6 +28,8 @@ const CifradoRC6 = () => {
 
     const [claveDescifrado, setClaveDescifrado] = useState('')
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const validateForm = () => {
         if (!clave || !name || !email || !telephone || !address || !targetDeb || !password) {
             toast.error('Todos los campos son obligatorios');
@@ -35,6 +37,12 @@ const CifradoRC6 = () => {
         }
         return true;
     };
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
 
     const sendDataEncrypt = async () =>{
@@ -97,9 +105,109 @@ const CifradoRC6 = () => {
         }
     }
 
+    const getResponsiveStyles = () => {
+        if (windowWidth <= 480) {
+            // Para dispositivos móviles
+            return {
+                divData: {
+                    width: '90%',
+                    padding: '10px',
+                    margin: '10px 0',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '80%',
+                    padding: '10px',
+                    fontSize: '16px',
+                },
+                button: {
+                    width: '80%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        } else if (windowWidth <= 768) {
+            // Para tablets
+            return {
+                divData: {
+                    width: '80%',
+                    padding: '10px',
+                    margin: '20px',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '80%',
+                    padding: '10px',
+                    fontSize: '16px'
+                },
+                button: {
+                    width: '80%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        } else {
+            // Para pantallas más grandes
+            return {
+                divData: {
+                    width: '30%',
+                    padding: '10px',
+                    margin: '20px',
+                    wordWrap: 'break-word',      
+                    overflowWrap: 'break-word', 
+                    overflow: 'hidden',          
+                    textOverflow: 'ellipsis',
+                    borderWidth: '2px', 
+                    borderColor: '#f1f1f1', 
+                    borderStyle: 'solid',
+                },
+                input: {
+                    width: '100%',
+                    padding: '10px',
+                    fontSize: '16px'
+                },
+                button: {
+                    width: '100%',
+                    marginRight: '10px'
+                },
+                container: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '20px'
+                }
+            };
+        }
+    };
+
+    const styles = getResponsiveStyles();
+
 
     return (
-        <div style={{ padding: "20px", textAlign: "center", display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+        <div style={styles.container}>
             <div className="divCifrado" style={styles.divData}>
                 <h1>Cifrado de datos EXPRESS</h1>
 
@@ -277,17 +385,3 @@ const CifradoRC6 = () => {
 };
 
 export { CifradoRC6 };
-
-const styles={
-    divData:{
-        alignItems: 'center',
-        margin: '20px', 
-        borderWidth: '2px', 
-        borderColor: '#f1f1f1', 
-        borderStyle: 'solid',
-        padding: '10px',
-        width: '30%',
-        wordWrap: 'break-word',
-        overflowWrap: 'break-word',
-    },
-}

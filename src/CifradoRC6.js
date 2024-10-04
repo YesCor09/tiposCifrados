@@ -25,7 +25,6 @@ const CifradoRC6 = () => {
     const [telephoneDecrypt, setDecryptTelephone] = useState('');
     const [addressDecrypt, setDecryptAddress] = useState('');
     const [targetDebDecrypt, setDecryptTargerDeb] = useState('');
-    const [passwordDecrypt, setDecryptPassword] = useState('');
 
     const [claveDescifrado, setClaveDescifrado] = useState('')
 
@@ -93,7 +92,6 @@ const CifradoRC6 = () => {
             setDecryptTelephone(result.decrypted_phone)
             setDecryptAddress(result.decrypted_address)
             setDecryptTargerDeb(result.decrypted_credit_card)
-            setDecryptPassword(result.decrypted_password)
         } catch (error) {
             console.error(error)
         }
@@ -253,9 +251,6 @@ const CifradoRC6 = () => {
                     <div style={{ marginBottom: "20px" }}>
                         <text>Tarjeta Debito/Credito: {targetDebDecrypt}</text>
                     </div>
-                    {/* <div style={{ marginBottom: "20px" }}>
-                        <text>Contraseña: {passwordDecrypt}</text>
-                    </div> */}
                 </div>
             </div>
 

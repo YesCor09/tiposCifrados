@@ -14,7 +14,7 @@ export const AppRoutes = () => {
             <Route path='/cesar' element={<CifradoCesar/>}/>
             <Route path='/escitala' element={<CifradoEscitala/>}/>
             <Route path='/cifraDjango' element={<CifradoDjango/>}/>
-            <Route path='/cifraRC6' element={<CifradoRC6/>}/>
+            <Route path='/cifraExpress' element={<CifradoRC6/>}/>
         </Routes>
     </Router>
   )

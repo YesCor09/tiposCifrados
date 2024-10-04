@@ -94,7 +94,7 @@ const TiposCifrado = () => {
                 </div>
                 <div
                     style={styles.cifradoItem}
-                    onClick={() => navigate('/cifraRC6')}
+                    onClick={() => navigate('/cifraExpress')}
                 >
                     <img src={cifraRC6} alt="Cifrado RC6" style={styles.image} />
                     <h3 style={styles.text}>Cifrado EXPRESS</h3>

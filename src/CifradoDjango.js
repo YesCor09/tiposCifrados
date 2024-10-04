@@ -12,6 +12,13 @@ const CifradoDjango = () => {
     const [password, setPassword] = useState('');
     const [claveDescifrado, setClaveDescifrado] = useState('')
 
+    const [nameEncrypt, setEncryptName] = useState('');
+    const [emailEncrypt, setEncryptEmail] = useState('');
+    const [telephoneEncrypt, setEncryptTelephone] = useState('');
+    const [addressEncrypt, setEncryptAddress] = useState('');
+    const [targetDebEncrypt, setEncryptTargerDeb] = useState('');
+    const [passwordEncrypt, setEncryptPassword] = useState('');
+
     const validateForm = () => {
         if (!clave || !name || !email || !telephone || !address || !targetDeb || !password) {
             toast.error('Todos los campos son obligatorios');
@@ -39,7 +46,13 @@ const CifradoDjango = () => {
                     password: password
                 })
             })
-            console.log(rs)
+            const result = await rs.json()
+            setEncryptName(result.encrypted_name)
+            setEncryptEmail(result.encrypted_email)
+            setEncryptTelephone(result.encrypted_phone)
+            setEncryptAddress(result.encrypted_address)
+            setEncryptTargerDeb(result.encrypted_credit_card)
+            setEncryptPassword(result.encrypted_password)
         } catch (error) {
             console.error(error)
         }
@@ -142,20 +155,24 @@ const CifradoDjango = () => {
             
 
             <div className="divDataCifrado" style={styles.divData}>
+                <h1>Datos Cifrados</h1>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Nombre:</text>
+                    <text>Nombre: {nameEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Correo electronico:</text>
+                    <text>Correo electronico: {emailEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Telefono:</text>
+                    <text>Telefono: {telephoneEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Direccion:</text>
+                    <text>Direccion: {addressEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Tarjeta Debito/Credito</text>
+                    <text>Tarjeta Debito/Credito: {targetDebEncrypt}</text>
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                    <text>Contraseña: {passwordEncrypt}</text>
                 </div>
             </div>
 
@@ -228,6 +245,9 @@ const styles = {
         borderWidth: '2px', 
         borderColor: '#f1f1f1', 
         borderStyle: 'solid',
-        padding: '10px'
-    }
+        padding: '10px',
+        width: '30%',
+        wordWrap: 'break-word',
+        overflowWrap: 'break-word',
+    },
 }

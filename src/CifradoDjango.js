@@ -10,7 +10,6 @@ const CifradoDjango = () => {
     const [address, setAddress] = useState('');
     const [targetDeb, setTargerDeb] = useState('');
     const [password, setPassword] = useState('');
-    const [claveDescifrado, setClaveDescifrado] = useState('')
 
     const [nameEncrypt, setEncryptName] = useState('');
     const [emailEncrypt, setEncryptEmail] = useState('');
@@ -18,6 +17,15 @@ const CifradoDjango = () => {
     const [addressEncrypt, setEncryptAddress] = useState('');
     const [targetDebEncrypt, setEncryptTargerDeb] = useState('');
     const [passwordEncrypt, setEncryptPassword] = useState('');
+
+    const [nameDecrypt, setDecryptName] = useState('');
+    const [emailDecrypt, setDecryptEmail] = useState('');
+    const [telephoneDecrypt, setDecryptTelephone] = useState('');
+    const [addressDecrypt, setDecryptAddress] = useState('');
+    const [targetDebDecrypt, setDecryptTargerDeb] = useState('');
+    const [passwordDecrypt, setDecryptPassword] = useState('');
+
+    const [claveDescifrado, setClaveDescifrado] = useState('')
 
     const validateForm = () => {
         if (!clave || !name || !email || !telephone || !address || !targetDeb || !password) {
@@ -53,6 +61,36 @@ const CifradoDjango = () => {
             setEncryptAddress(result.encrypted_address)
             setEncryptTargerDeb(result.encrypted_credit_card)
             setEncryptPassword(result.encrypted_password)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const sendDataDeCrypt = async () =>{
+        try {
+            const rs = await fetch("https://undetesteo.pythonanywhere.com/api/descifrar/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    key_decrypt: claveDescifrado,
+                    key_used: clave,
+                    encrypted_name: nameEncrypt,
+                    encrypted_email: emailEncrypt,
+                    encrypted_phone: telephoneEncrypt,
+                    encrypted_address: addressEncrypt,
+                    encrypted_credit_card: targetDebEncrypt,
+                })
+            })
+
+            const result = await rs.json()
+            setDecryptName(result.decrypted_name)
+            setDecryptEmail(result.decrypted_email)
+            setDecryptTelephone(result.decrypted_phone)
+            setDecryptAddress(result.decrypted_address)
+            setDecryptTargerDeb(result.decrypted_credit_card)
+            setDecryptPassword(result.decrypted_password)
         } catch (error) {
             console.error(error)
         }
@@ -189,6 +227,7 @@ const CifradoDjango = () => {
                 </div>
                 <div style={{ marginBottom: "20px" }}>
                     <Button
+                    onClick={() => sendDataDeCrypt()}
                         variant="contained"
                         color="secondary"
                         style={{ marginRight: "10px" }}
@@ -197,20 +236,24 @@ const CifradoDjango = () => {
                     </Button>
                 </div>
                 <div className="divResultDecifrado">
-                <div style={{ marginBottom: "20px" }}>
-                    <text>Nombre:</text>
+                    <h1>Datos Descifrados</h1>
+                    <div style={{ marginBottom: "20px" }}>
+                        <text>Nombre: {nameDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Correo electronico:</text>
+                        <text>Correo electronico: {emailDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Telefono:</text>
+                        <text>Telefono: {telephoneDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Direccion:</text>
+                        <text>Direccion: {addressDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Tarjeta Debito/Credito</text>
+                        <text>Tarjeta Debito/Credito: {targetDebDecrypt}</text>
+                    </div>
+                    <div style={{ marginBottom: "20px" }}>
+                        <text>Contraseña: {passwordDecrypt}</text>
                     </div>
                 </div>
             </div>

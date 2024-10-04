@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from '@mui/material/Button';
-// import toast from "react-hot-toast"; 
-// import blake from 'blakejs';
+import toast from "react-hot-toast"; 
 
 const CifradoDjango = () => {
     const [clave, setClave] = useState('')
@@ -12,39 +11,18 @@ const CifradoDjango = () => {
     const [targetDeb, setTargerDeb] = useState('');
     const [password, setPassword] = useState('');
     const [claveDescifrado, setClaveDescifrado] = useState('')
-    // const [outputMessage, setOutputMessage] = useState('');
-    // const [message, setMessage] = useState(''); // Estado para el mensaje ingresado
 
-
-
-    // // Función que se ejecuta al hacer clic en el botón de cifrar o descifrar
-    // const handleAction = (isEncrypting) => {
-    //     if (!message.trim()) {
-    //         toast.error("El mensaje no puede estar vacío");
-    //         return;
-    //     }
-
-    //     // const parsedKey = parseInt(key, 10);
-    //     // if (isNaN(parsedKey) || parsedKey < 1) {
-    //     //     toast.error("La clave debe ser un número mayor que 0");
-    //     //     return;
-    //     // }
-
-    //     // const result = escitalaCipher(message, parsedKey, isEncrypting);
-    //     // setOutputMessage(result);
-    //     // toast.success(isEncrypting ? "Mensaje cifrado correctamente!" : "Mensaje descifrado correctamente!");
-    // };
-
-    // const handleCopy = () => {
-    //     if (!outputMessage) {
-    //         toast.error("No hay mensaje para copiar");
-    //         return;
-    //     }
-    //     navigator.clipboard.writeText(outputMessage);
-    //     toast.success('Mensaje copiado correctamente!');
-    // };
+    const validateForm = () => {
+        if (!clave || !name || !email || !telephone || !address || !targetDeb || !password) {
+            toast.error('Todos los campos son obligatorios');
+            return false;
+        }
+        return true;
+    };
+    
 
     const sendDataEncrypt = async () =>{
+        if (!validateForm()) return;
         try {
             const rs = await fetch("https://undetesteo.pythonanywhere.com/api/cifrar/", {
                 method: 'POST',
@@ -143,7 +121,7 @@ const CifradoDjango = () => {
                 <div style={{ marginBottom: "20px" }}>
                     <input
                         type="password"
-                        placeholder="16 digitos"
+                        placeholder="Contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         style={{ padding: "10px", width: "300px", fontSize: "16px" }}

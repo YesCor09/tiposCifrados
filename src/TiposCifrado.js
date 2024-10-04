@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import cesar from './assets/cesar.png';
 import escitala from './assets/escitala.png';
 import cifraDjango from './assets/CifradoDjango.jpg';
+import cifraRC6 from './assets/cifradoRC6.png';
 
 const TiposCifrado = () => {
     const navigate = useNavigate();
@@ -95,7 +96,7 @@ const TiposCifrado = () => {
                     style={styles.cifradoItem}
                     onClick={() => navigate('/cifraRC6')}
                 >
-                    <img src={cifraDjango} alt="Cifrado RC6" style={styles.image} />
+                    <img src={cifraRC6} alt="Cifrado RC6" style={styles.image} />
                     <h3 style={styles.text}>Cifrado RC6</h3>
                 </div>
             </div>

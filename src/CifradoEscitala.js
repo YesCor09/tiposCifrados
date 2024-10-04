@@ -25,15 +25,15 @@ const CifradoEscitala = () => {
         let transformedMessage = '';
 
         if (isEncrypting) {
-        // Cifrar (Escribir por filas, leer por columnas)
-        for (let col = 0; col < numColumns; col++) {
-            for (let row = 0; row < numRows; row++) {
-                const index = row * numColumns + col;
-                if (index < normalizedMessage.length) {
-                    transformedMessage += normalizedMessage[index];
+            // Cifrar (Escribir por filas, leer por columnas)
+            for (let col = 0; col < numColumns; col++) {
+                for (let row = 0; row < numRows; row++) {
+                    const index = row * numColumns + col;
+                    if (index < normalizedMessage.length) {
+                        transformedMessage += normalizedMessage[index];
+                    }
                 }
             }
-        }
         } else {
         // Descifrar (Escribir por columnas, leer por filas)
         const decryptedArr = Array.from({ length: numRows }, () => "");

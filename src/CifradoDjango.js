@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from '@mui/material/Button';
-// import toast from "react-hot-toast";
+// import toast from "react-hot-toast"; 
 // import blake from 'blakejs';
 
 const CifradoDjango = () => {
@@ -43,6 +43,29 @@ const CifradoDjango = () => {
     //     navigator.clipboard.writeText(outputMessage);
     //     toast.success('Mensaje copiado correctamente!');
     // };
+
+    const sendDataEncrypt = async () =>{
+        try {
+            const rs = await fetch("https://undetesteo.pythonanywhere.com/api/cifrar/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    key: clave,
+                    name: name,
+                    email: email,
+                    phone: telephone,
+                    address: address,
+                    credit_card: targetDeb,
+                    password: password
+                })
+            })
+            console.log(rs)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
 
     return (
@@ -129,6 +152,7 @@ const CifradoDjango = () => {
 
                 <div style={{ marginBottom: "20px" }}>
                     <Button
+                        onClick={() => sendDataEncrypt()}
                         variant="contained"
                         color="primary"
                         style={{ marginRight: "10px" }}

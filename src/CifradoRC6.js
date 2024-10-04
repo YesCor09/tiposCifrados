@@ -10,6 +10,23 @@ const CifradoRC6 = () => {
     const [address, setAddress] = useState('');
     const [targetDeb, setTargerDeb] = useState('');
     const [password, setPassword] = useState('');
+
+    
+    
+    const [nameEncrypt, setEncryptName] = useState('');
+    const [emailEncrypt, setEncryptEmail] = useState('');
+    const [telephoneEncrypt, setEncryptTelephone] = useState('');
+    const [addressEncrypt, setEncryptAddress] = useState('');
+    const [targetDebEncrypt, setEncryptTargerDeb] = useState('');
+    const [passwordEncrypt, setEncryptPassword] = useState('');
+
+    const [nameDecrypt, setDecryptName] = useState('');
+    const [emailDecrypt, setDecryptEmail] = useState('');
+    const [telephoneDecrypt, setDecryptTelephone] = useState('');
+    const [addressDecrypt, setDecryptAddress] = useState('');
+    const [targetDebDecrypt, setDecryptTargerDeb] = useState('');
+    const [passwordDecrypt, setDecryptPassword] = useState('');
+
     const [claveDescifrado, setClaveDescifrado] = useState('')
 
     const validateForm = () => {
@@ -20,10 +37,11 @@ const CifradoRC6 = () => {
         return true;
     };
     
+
     const sendDataEncrypt = async () =>{
         if (!validateForm()) return;
         try {
-            const rs = await fetch("https://undetesteo.pythonanywhere.com/api/cifrar/", {
+            const rs = await fetch("https://recipehub-api-main.vercel.app/encrypt", {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json'
@@ -38,7 +56,44 @@ const CifradoRC6 = () => {
                     password: password
                 })
             })
-            console.log(rs)
+            const result = await rs.json()
+            setEncryptName(result.encrypted_name)
+            setEncryptEmail(result.encrypted_email)
+            setEncryptTelephone(result.encrypted_phone)
+            setEncryptAddress(result.encrypted_address)
+            setEncryptTargerDeb(result.encrypted_credit_card)
+            setEncryptPassword(result.encrypted_password)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const sendDataDeCrypt = async () =>{
+        if(!validateForm()) return
+        try {
+            const rs = await fetch("https://recipehub-api-main.vercel.app/decrypt", {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    key: claveDescifrado,
+                    encrypted_name: nameEncrypt,
+                    encrypted_email: emailEncrypt,
+                    encrypted_phone: telephoneEncrypt,
+                    encrypted_address: addressEncrypt,
+                    encrypted_credit_card: targetDebEncrypt,
+                })
+            })
+
+            const result = await rs.json()
+            console.log(result)
+            setDecryptName(result.decrypted_name)
+            setDecryptEmail(result.decrypted_email)
+            setDecryptTelephone(result.decrypted_phone)
+            setDecryptAddress(result.decrypted_address)
+            setDecryptTargerDeb(result.decrypted_credit_card)
+            setDecryptPassword(result.decrypted_password)
         } catch (error) {
             console.error(error)
         }
@@ -48,7 +103,7 @@ const CifradoRC6 = () => {
     return (
         <div style={{ padding: "20px", textAlign: "center", display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
             <div className="divCifrado" style={styles.divData}>
-                <h1>Cifrado de datos (RC6, RSA, HASH)</h1>
+                <h1>Cifrado de datos EXPRESS</h1>
 
                 <text>Clave para descifrar</text>
                 <div style={{ marginBottom: "20px" }}>
@@ -139,20 +194,24 @@ const CifradoRC6 = () => {
                 </div>
             </div>
             <div className="divDataCifrado" style={styles.divData}>
+                <h1>Datos Cifrados</h1>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Nombre:</text>
+                    <text>Nombre: {nameEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Correo electronico:</text>
+                    <text>Correo electronico: {emailEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Telefono:</text>
+                    <text>Telefono: {telephoneEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Direccion:</text>
+                    <text>Direccion: {addressEncrypt}</text>
                 </div>
                 <div style={{ marginBottom: "20px" }}>
-                    <text>Tarjeta Debito/Credito</text>
+                    <text>Tarjeta Debito/Credito: {targetDebEncrypt}</text>
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                    <text>Contraseña: {passwordEncrypt}</text>
                 </div>
             </div>
 
@@ -169,6 +228,7 @@ const CifradoRC6 = () => {
                 </div>
                 <div style={{ marginBottom: "20px" }}>
                     <Button
+                        onClick={() => sendDataDeCrypt()}
                         variant="contained"
                         color="secondary"
                         style={{ marginRight: "10px" }}
@@ -177,21 +237,25 @@ const CifradoRC6 = () => {
                     </Button>
                 </div>
                 <div className="divResultDecifrado">
-                <div style={{ marginBottom: "20px" }}>
-                    <text>Nombre:</text>
+                    <h1>Datos Descifrados</h1>
+                    <div style={{ marginBottom: "20px" }}>
+                        <text>Nombre: {nameDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Correo electronico:</text>
+                        <text>Correo electronico: {emailDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Telefono:</text>
+                        <text>Telefono: {telephoneDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Direccion:</text>
+                        <text>Direccion: {addressDecrypt}</text>
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                        <text>Tarjeta Debito/Credito</text>
+                        <text>Tarjeta Debito/Credito: {targetDebDecrypt}</text>
                     </div>
+                    {/* <div style={{ marginBottom: "20px" }}>
+                        <text>Contraseña: {passwordDecrypt}</text>
+                    </div> */}
                 </div>
             </div>
 
@@ -226,6 +290,9 @@ const styles={
         borderWidth: '2px', 
         borderColor: '#f1f1f1', 
         borderStyle: 'solid',
-        padding: '10px'
+        padding: '10px',
+        width: '30%',
+        wordWrap: 'break-word',
+        overflowWrap: 'break-word',
     },
 }

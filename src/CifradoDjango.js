@@ -227,7 +227,7 @@ const CifradoDjango = () => {
                 </div>
                 <div style={{ marginBottom: "20px" }}>
                     <Button
-                    onClick={() => sendDataDeCrypt()}
+                        onClick={() => sendDataDeCrypt()}
                         variant="contained"
                         color="secondary"
                         style={{ marginRight: "10px" }}
